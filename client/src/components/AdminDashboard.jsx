@@ -1,0 +1,194 @@
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import axios from 'axios'
+import { Activity, ArrowLeft, BarChart3, CalendarDays, CheckCircle2, ChevronRight, ClipboardList, Clock3, Loader2, LogOut, Mail, MessageCircle, RefreshCw, Search, Sparkles, Users, X } from 'lucide-react'
+
+const API_URL = import.meta.env.VITE_API_URL || '/api'
+const SERVICES = ['Alle Leistungen', 'Reinigung', 'Hausmeisterdienst', 'Winterdienst', 'Sonstiges']
+
+const formatDate = (value) => new Intl.DateTimeFormat('de-DE', {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+}).format(new Date(value))
+
+export default function AdminDashboard({ token, onLogout }) {
+  const [contacts, setContacts] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [refreshing, setRefreshing] = useState(false)
+  const [error, setError] = useState('')
+  const [search, setSearch] = useState('')
+  const [service, setService] = useState(SERVICES[0])
+  const [selectedContact, setSelectedContact] = useState(null)
+  const [lastUpdated, setLastUpdated] = useState(null)
+
+  const loadContacts = useCallback(async ({ silent = false } = {}) => {
+    if (!silent) setLoading(true)
+    if (silent) setRefreshing(true)
+    setError('')
+    try {
+      const response = await axios.get(`${API_URL}/contact`, { headers: { Authorization: `Bearer ${token}` } })
+      setContacts(response.data.data || [])
+      setLastUpdated(new Date())
+    } catch (requestError) {
+      if (requestError.response?.status === 401) onLogout()
+      setError('Anfragen konnten nicht geladen werden. Bitte prüfen Sie die Serververbindung.')
+    } finally {
+      if (!silent) setLoading(false)
+      if (silent) setRefreshing(false)
+    }
+  }, [token, onLogout])
+
+  useEffect(() => {
+    const initialLoad = window.setTimeout(() => loadContacts(), 0)
+    const interval = window.setInterval(() => loadContacts({ silent: true }), 30000)
+    return () => {
+      window.clearTimeout(initialLoad)
+      window.clearInterval(interval)
+    }
+  }, [loadContacts])
+
+  const filteredContacts = useMemo(() => {
+    const query = search.trim().toLowerCase()
+    return contacts.filter((contact) => {
+      const matchesService = service === SERVICES[0] || contact.service === service
+      const matchesSearch = !query || [contact.name, contact.email, contact.message].some((value) => value?.toLowerCase().includes(query))
+      return matchesService && matchesSearch
+    })
+  }, [contacts, search, service])
+
+  const serviceCounts = contacts.reduce((counts, contact) => {
+    counts[contact.service || 'Sonstiges'] = (counts[contact.service || 'Sonstiges'] || 0) + 1
+    return counts
+  }, {})
+
+  const latestContact = contacts[0]
+  const topServices = Object.entries(serviceCounts).sort(([, a], [, b]) => b - a)
+  const maxServiceCount = topServices[0]?.[1] || 1
+
+  return (
+    <div className="min-h-screen bg-surface text-slate-900">
+      <header className="border-b border-slate-200 bg-white">
+        <div className="mx-auto flex min-h-18 w-full max-w-330 items-center justify-between gap-4 px-5 sm:px-8 lg:px-10">
+          <a href="/" className="flex items-center gap-3" aria-label="Zur Website">
+            <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand shadow-sm">
+              <Sparkles className="h-5 w-5 text-white" />
+            </span>
+            <span>
+              <span className="block text-sm font-bold tracking-tight">CleanPro GmbH</span>
+              <span className="block text-[11px] font-medium text-slate-400">Admin Bereich</span>
+            </span>
+          </a>
+          <div className="flex items-center gap-3">
+            <span className="hidden items-center gap-2 text-xs font-medium text-slate-400 sm:flex"><span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" /> Live-Sync · 30 Sek.</span>
+            <div className="flex items-center gap-2"><button type="button" onClick={onLogout} className="btn btn-ghost px-3 py-2 text-sm"><LogOut className="h-4 w-4" /><span className="hidden sm:inline">Abmelden</span></button><a href="/" className="btn btn-ghost px-3 py-2 text-sm" aria-label="Zur Website"><ArrowLeft className="h-4 w-4" /><span className="hidden sm:inline">Zur Website</span></a></div>
+          </div>
+        </div>
+      </header>
+
+      <main className="mx-auto w-full max-w-330 px-5 py-8 sm:px-8 lg:px-10 lg:py-12">
+        <section className="relative mb-8 overflow-hidden rounded-3xl bg-brand-dark px-6 py-8 text-white shadow-[0_18px_40px_rgb(9_40_36/0.2)] sm:px-9 sm:py-10">
+          <div className="relative z-10 max-w-2xl">
+            <p className="eyebrow mb-3 text-brand-light">Control room · {lastUpdated ? `Stand ${lastUpdated.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })}` : 'wird synchronisiert'}</p>
+            <h1 className="text-3xl font-bold tracking-tight sm:text-5xl">Anfragen im Blick.</h1>
+            <p className="mt-3 max-w-xl text-sm leading-6 text-[#D0E0D8]">Ihre Anfrage-Pipeline, live aus dem CleanPro-System. Öffnen Sie einen Eintrag für alle Details und den direkten Kontakt.</p>
+          </div>
+          <div className="pointer-events-none absolute -right-8 -top-12 hidden h-64 w-64 rounded-full border-28 border-brand-light/15 sm:block" />
+          <div className="pointer-events-none absolute -bottom-24 right-28 hidden h-52 w-52 rounded-full border border-brand-light/20 sm:block" />
+          <button type="button" onClick={() => loadContacts({ silent: true })} disabled={loading || refreshing} className="relative z-10 mt-6 inline-flex items-center gap-2 rounded-lg bg-brand-light px-4 py-2.5 text-sm font-bold text-brand-dark transition hover:bg-white hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60 sm:absolute sm:bottom-9 sm:right-9 sm:mt-0">
+            {refreshing || loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
+            Aktualisieren
+          </button>
+        </section>
+
+        <section className="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4" aria-label="Kennzahlen">
+          <MetricCard icon={ClipboardList} label="Anfragen gesamt" value={contacts.length} tone="teal" />
+          <MetricCard icon={CalendarDays} label="Diesen Monat" value={contacts.filter((contact) => new Date(contact.createdAt).getMonth() === new Date().getMonth() && new Date(contact.createdAt).getFullYear() === new Date().getFullYear()).length} tone="blue" />
+          <MetricCard icon={Users} label="Häufigste Leistung" value={Object.entries(serviceCounts).sort(([, a], [, b]) => b - a)[0]?.[0] || 'Noch keine'} tone="clay" compact />
+          <MetricCard icon={CheckCircle2} label="Letzte Anfrage" value={latestContact ? formatDate(latestContact.createdAt).split(',')[0] : 'Noch keine'} tone="green" compact />
+        </section>
+
+        <section className="mb-8 grid gap-6 lg:grid-cols-[1.25fr_.75fr]">
+          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_30px_rgb(15_23_42/0.03)] sm:p-6">
+            <div className="mb-5 flex items-start justify-between gap-4"><div><p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Nachfrage</p><h2 className="mt-1 text-lg font-bold text-slate-900">Leistungen im Vergleich</h2></div><Activity className="h-5 w-5 text-brand" /></div>
+            <div className="space-y-4">
+              {SERVICES.slice(1).map((serviceName) => {
+                const count = serviceCounts[serviceName] || 0
+                return <div key={serviceName}><div className="mb-1.5 flex justify-between text-sm"><span className="font-medium text-slate-600">{serviceName}</span><span className="font-bold text-slate-900">{count}</span></div><div className="h-2 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-brand transition-all duration-700" style={{ width: `${Math.max((count / maxServiceCount) * 100, count ? 8 : 0)}%` }} /></div></div>
+              })}
+            </div>
+          </div>
+          <div className="rounded-2xl border border-[#C8D98F] bg-green-bg p-5 sm:p-6"><div className="mb-6 flex h-10 w-10 items-center justify-center rounded-xl bg-white text-brand shadow-sm"><Clock3 className="h-5 w-5" /></div><p className="text-xs font-semibold uppercase tracking-wider text-green">Nächster Schritt</p><h2 className="mt-1 text-lg font-bold text-brand-dark">Schnell reagieren</h2><p className="mt-2 text-sm leading-6 text-[#55705A]">Wählen Sie eine Anfrage aus und antworten Sie direkt per E-Mail. Jede neue Anfrage erscheint automatisch im Dashboard.</p>{lastUpdated && <p className="mt-5 text-xs font-medium text-green">Zuletzt aktualisiert {lastUpdated.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })}</p>}</div>
+        </section>
+
+        <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_8px_30px_rgb(15_23_42/0.04)]">
+          <div className="flex flex-col gap-4 border-b border-slate-100 p-5 sm:p-6 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <h2 className="text-lg font-bold text-slate-900">Eingegangene Anfragen</h2>
+              <p className="mt-1 text-sm text-slate-500">{filteredContacts.length} von {contacts.length} Einträgen angezeigt</p>
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <label className="relative block">
+                <span className="sr-only">Anfragen durchsuchen</span>
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                <input className="field min-w-0 py-2.5 pl-9 pr-3 text-sm sm:w-64" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Name oder E-Mail suchen" />
+              </label>
+              <label>
+                <span className="sr-only">Nach Leistung filtern</span>
+                <select className="field cursor-pointer py-2.5 text-sm" value={service} onChange={(event) => setService(event.target.value)}>
+                  {SERVICES.map((option) => <option key={option}>{option}</option>)}
+                </select>
+              </label>
+            </div>
+          </div>
+
+          {error && <div className="m-5 rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
+          {loading && contacts.length === 0 ? (
+            <div className="flex min-h-56 items-center justify-center text-sm text-slate-500"><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Anfragen werden geladen</div>
+          ) : filteredContacts.length === 0 ? (
+            <div className="flex min-h-56 flex-col items-center justify-center px-5 text-center"><BarChart3 className="mb-3 h-8 w-8 text-slate-300" /><p className="font-semibold text-slate-700">Keine Anfragen gefunden</p><p className="mt-1 text-sm text-slate-500">Passen Sie Ihre Suche oder den Filter an.</p></div>
+          ) : (
+            <div className="overflow-x-auto">
+                <table className="w-full min-w-190 text-left text-sm">
+                <thead className="bg-slate-50 text-[11px] uppercase tracking-wider text-slate-400">
+                  <tr><th className="px-6 py-3 font-semibold">Kontakt</th><th className="px-6 py-3 font-semibold">Leistung</th><th className="px-6 py-3 font-semibold">Nachricht</th><th className="px-6 py-3 font-semibold">Eingegangen</th></tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {filteredContacts.map((contact) => (
+                    <tr key={contact._id} onClick={() => setSelectedContact(contact)} onKeyDown={(event) => event.key === 'Enter' && setSelectedContact(contact)} tabIndex="0" role="button" className="cursor-pointer align-top transition-all hover:bg-[#F2F8F0] hover:shadow-[0_2px_12px_rgb(21_59_55/0.08)] focus:bg-[#F2F8F0] focus:outline-none">
+                      <td className="px-6 py-4"><p className="font-semibold text-slate-800">{contact.name}</p><a className="mt-1 inline-flex items-center gap-1 text-xs text-brand hover:underline" href={`mailto:${contact.email}`}><Mail className="h-3 w-3" />{contact.email}</a>{contact.phone && <p className="mt-1 text-xs text-slate-400">{contact.phone}</p>}</td>
+                      <td className="px-6 py-4"><span className="inline-flex rounded-full bg-brand-light px-2.5 py-1 text-xs font-semibold text-brand">{contact.service || 'Sonstiges'}</span></td>
+                      <td className="max-w-90 px-6 py-4 leading-6 text-slate-600">{contact.message}</td>
+                      <td className="whitespace-nowrap px-6 py-4 text-xs text-slate-500">{formatDate(contact.createdAt)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </section>
+
+        {selectedContact && <ContactDetail contact={selectedContact} onClose={() => setSelectedContact(null)} />}
+      </main>
+    </div>
+  )
+}
+
+function ContactDetail({ contact, onClose }) {
+  return <aside className="mt-6 overflow-hidden rounded-2xl border border-[#C9DED0] bg-[#F8FCF7] shadow-[0_12px_35px_rgb(40_100_90/0.08)]" aria-label="Anfragedetails">
+    <div className="flex items-start justify-between gap-4 border-b border-[#DCEBDD] px-5 py-5 sm:px-7"><div><p className="eyebrow mb-2 text-brand">Anfrage geöffnet</p><h2 className="text-xl font-bold text-slate-900">{contact.name}</h2><p className="mt-1 text-sm text-slate-500">{formatDate(contact.createdAt)}</p></div><button type="button" onClick={onClose} className="grid h-9 w-9 place-items-center rounded-lg text-slate-400 transition-all hover:bg-white hover:text-slate-700 hover:shadow-sm" aria-label="Details schließen"><X className="h-5 w-5" /></button></div>
+    <div className="grid gap-6 px-5 py-6 sm:px-7 lg:grid-cols-[.8fr_1.2fr]"><div className="space-y-3"><a href={`mailto:${contact.email}`} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-brand transition-all hover:border-brand hover:shadow-sm"><Mail className="h-4 w-4" />{contact.email}</a>{contact.phone && <a href={`tel:${contact.phone}`} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 transition-all hover:border-brand hover:shadow-sm"><MessageCircle className="h-4 w-4 text-brand" />{contact.phone}</a>}<div className="flex items-center justify-between rounded-xl bg-brand-light px-4 py-3"><span className="text-sm text-[#55705A]">Gewünschte Leistung</span><span className="text-sm font-bold text-brand">{contact.service || 'Sonstiges'}</span></div></div><div className="rounded-xl border border-[#DCEBDD] bg-white p-5"><p className="mb-2 text-xs font-semibold uppercase tracking-wider text-slate-400">Nachricht</p><p className="whitespace-pre-wrap text-sm leading-7 text-slate-700">{contact.message}</p><a href={`mailto:${contact.email}?subject=Ihre%20Anfrage%20bei%20CleanPro`} className="btn btn-primary mt-5 w-fit px-4 py-2.5 text-sm">Antworten <ChevronRight className="h-4 w-4" /></a></div></div>
+  </aside>
+}
+
+function MetricCard({ icon: Icon, label, value, tone, compact = false }) {
+  const tones = {
+    teal: 'bg-[#E8F5B8] text-brand',
+    blue: 'bg-blue-50 text-blue-600',
+    clay: 'bg-[#FFE1D7] text-[#D84E35]',
+    green: 'bg-green-50 text-green-600',
+  }
+
+  return <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_30px_rgb(15_23_42/0.03)]"><div className={`mb-5 grid h-10 w-10 place-items-center rounded-xl ${tones[tone]}`}><Icon className="h-5 w-5" /></div><p className="text-xs font-semibold uppercase tracking-wider text-slate-400">{label}</p><p className={`mt-1 truncate font-bold text-slate-900 ${compact ? 'text-lg' : 'text-3xl'}`}>{value}</p></article>
+}
