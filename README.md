@@ -12,10 +12,7 @@ cleaning-services/
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- Node.js 18+
 - MongoDB (local or [MongoDB Atlas](https://www.mongodb.com/atlas))
-
 ---
 
 ### 1. Start the Backend
@@ -32,7 +29,6 @@ npm run dev
 ```
 
 The API runs on **http://localhost:5000**.
-
 ---
 
 ### 2. Start the Frontend
@@ -43,7 +39,6 @@ npm run dev
 ```
 
 The site runs on **http://localhost:5173** and proxies `/api` → `localhost:5000`.
-
 ---
 
 ## ⚙️ Environment Variables (server/.env)
@@ -56,7 +51,6 @@ The site runs on **http://localhost:5173** and proxies `/api` → `localhost:500
 | `ADMIN_USERNAME` | `admin` | Admin login username |
 | `ADMIN_PASSWORD` | required | Strong admin login password |
 | `ADMIN_SESSION_SECRET` | required | At least 32 random characters for signed sessions |
-
 ---
 
 ## 🌐 Single-page sections
@@ -70,7 +64,6 @@ The site runs on **http://localhost:5173** and proxies `/api` → `localhost:500
 | **About Us** | Permanent company story, team values, experience and customer stats. |
 | **Contact Form** | Client and server validation, field-level errors, then POST `/api/contact` to MongoDB. |
 | **Footer** | Dedicated WhatsApp and E-mail buttons plus Facebook, Instagram and LinkedIn links. |
-
 ---
 
 ## 📦 Tech Stack
@@ -80,19 +73,12 @@ The site runs on **http://localhost:5173** and proxies `/api` → `localhost:500
 | Frontend | React 18, Vite, Tailwind CSS v4, Lucide React, Axios |
 | Backend | Node.js, Express 4, Mongoose |
 | Database | MongoDB |
-
 ---
 
 ## 🔧 Customization
 
 Replace all placeholder values in the source files:
-
-- **Company name**: Search for `CleanPro GmbH` across `src/` and `server/`
-- **Phone number**: `+49 (0) 123 456 7890` / `4901234567890`
-- **Email**: `info@cleanpro-gmbh.de`
-- **Address**: `Musterstraße 12, 10115 Berlin`
 - **WhatsApp**: Update the `wa.me/` links with your real number
-
 ---
 
 ## 🏗 Production Build
