@@ -14,9 +14,11 @@ function sign(value) {
   return crypto.createHmac('sha256', getSecret()).update(value).digest('base64url');
 }
 
-function createAdminToken(username) {
+function createAdminToken({ username, email, role }) {
   const payload = Buffer.from(JSON.stringify({
     sub: username,
+    email,
+    role,
     exp: Math.floor(Date.now() / 1000) + TOKEN_TTL_SECONDS,
   })).toString('base64url');
   return `${payload}.${sign(payload)}`;
@@ -36,7 +38,9 @@ function verifyAdminToken(token) {
 
   try {
     const data = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
-    return typeof data.sub === 'string' && Number.isInteger(data.exp) && data.exp > Math.floor(Date.now() / 1000);
+    if (typeof data.sub !== 'string' || typeof data.email !== 'string' || !['admin', 'superadmin'].includes(data.role)) return false;
+    if (!Number.isInteger(data.exp) || data.exp <= Math.floor(Date.now() / 1000)) return false;
+    return data;
   } catch {
     return false;
   }
@@ -45,9 +49,11 @@ function verifyAdminToken(token) {
 function requireAdmin(req, res, next) {
   const authorization = req.get('authorization') || '';
   const token = authorization.startsWith('Bearer ') ? authorization.slice(7) : '';
-  if (!verifyAdminToken(token)) {
-    return res.status(401).json({ success: false, error: 'Admin-Anmeldung erforderlich.' });
+  const admin = verifyAdminToken(token);
+  if (!admin) {
+    return res.status(401).json({ success: false, error: 'Admin login required.' });
   }
+  req.admin = admin;
   return next();
 }
 
@@ -58,4 +64,4 @@ function requireSuperAdmin(req, res, next) {
   return next();
 }
 
-module.exports = { createAdminToken, requireAdmin };
+module.exports = { createAdminToken, requireAdmin, requireSuperAdmin };

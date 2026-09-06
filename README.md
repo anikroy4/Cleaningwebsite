@@ -49,8 +49,11 @@ The site runs on **http://localhost:5173** and proxies `/api` → `localhost:500
 | `PORT` | `5000` | Express server port |
 | `CLIENT_URL` | `http://localhost:5173` | Allowed CORS origin |
 | `ADMIN_USERNAME` | `admin` | Admin login username |
+| `ADMIN_EMAIL` | required for role management | Email identity of the super admin |
 | `ADMIN_PASSWORD` | required | Strong admin login password |
 | `ADMIN_SESSION_SECRET` | required | At least 32 random characters for signed sessions |
+
+The configured `ADMIN_USERNAME` and `ADMIN_PASSWORD` are the bootstrap credentials. Set `ADMIN_EMAIL` to make that account the initial super admin. A super admin can then open the dashboard's **Team access** section to create additional admin or super-admin accounts by email with a temporary password. Those users sign in with their email address.
 ---
 
 ## 🌐 Single-page sections
@@ -64,6 +67,7 @@ The site runs on **http://localhost:5173** and proxies `/api` → `localhost:500
 | **About Us** | Permanent company story, team values, experience and customer stats. |
 | **Contact Form** | Client and server validation, field-level errors, then POST `/api/contact` to MongoDB. |
 | **Footer** | Dedicated WhatsApp and E-mail buttons plus Facebook, Instagram and LinkedIn links. |
+| **Admin dashboard** | Request analytics, saved dashboard settings, and super-admin email role management. |
 ---
 
 ## 📦 Tech Stack
