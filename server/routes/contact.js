@@ -3,7 +3,7 @@ const router = express.Router();
 const Contact = require('../models/Contact');
 const { requireAdmin } = require('../middleware/adminAuth');
 
-const SERVICES = new Set(['Reinigung', 'Hausmeisterdienst', 'Winterdienst', 'Sonstiges']);
+const SERVICES = new Set(['Cleaning', 'Facility services', 'Winter maintenance', 'Other']);
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function validateContact(body = {}) {
@@ -16,24 +16,24 @@ function validateContact(body = {}) {
   };
   const errors = {};
 
-  if (!values.name) errors.name = 'Bitte geben Sie Ihren Namen ein.';
-  else if (values.name.length < 2) errors.name = 'Der Name muss mindestens 2 Zeichen enthalten.';
-  else if (values.name.length > 100) errors.name = 'Der Name darf höchstens 100 Zeichen enthalten.';
+  if (!values.name) errors.name = 'Please enter your name.';
+  else if (values.name.length < 2) errors.name = 'Your name must contain at least 2 characters.';
+  else if (values.name.length > 100) errors.name = 'Your name may contain no more than 100 characters.';
 
-  if (!values.email) errors.email = 'Bitte geben Sie Ihre E-Mail-Adresse ein.';
-  else if (!emailPattern.test(values.email)) errors.email = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+  if (!values.email) errors.email = 'Please enter your email address.';
+  else if (!emailPattern.test(values.email)) errors.email = 'Please enter a valid email address.';
 
   if (values.phone && !/^[+\d][\d\s()\-/.]{5,29}$/.test(values.phone)) {
-    errors.phone = 'Bitte geben Sie eine gültige Telefonnummer ein.';
+    errors.phone = 'Please enter a valid phone number.';
   }
 
   if (values.service && !SERVICES.has(values.service)) {
-    errors.service = 'Bitte wählen Sie eine gültige Leistung aus.';
+    errors.service = 'Please select a valid service.';
   }
 
-  if (!values.message) errors.message = 'Bitte beschreiben Sie kurz Ihr Anliegen.';
-  else if (values.message.length < 10) errors.message = 'Ihre Nachricht muss mindestens 10 Zeichen enthalten.';
-  else if (values.message.length > 2000) errors.message = 'Ihre Nachricht darf höchstens 2.000 Zeichen enthalten.';
+  if (!values.message) errors.message = 'Please briefly describe your request.';
+  else if (values.message.length < 10) errors.message = 'Your message must contain at least 10 characters.';
+  else if (values.message.length > 2000) errors.message = 'Your message may contain no more than 2,000 characters.';
 
   return { values, errors };
 }
@@ -45,7 +45,7 @@ router.post('/', async (req, res) => {
     if (Object.keys(errors).length > 0) {
       return res.status(400).json({
         success: false,
-        error: 'Bitte prüfen Sie Ihre Eingaben.',
+        error: 'Please check your entries.',
         fields: errors,
       });
     }
@@ -53,16 +53,16 @@ router.post('/', async (req, res) => {
     const contact = new Contact(values);
     await contact.save();
 
-    res.status(201).json({ success: true, message: 'Ihre Anfrage wurde erfolgreich gesendet!' });
+    res.status(201).json({ success: true, message: 'Your request was sent successfully!' });
   } catch (err) {
     if (err.name === 'ValidationError') {
       const fields = Object.fromEntries(
         Object.entries(err.errors).map(([field, detail]) => [field, detail.message])
       );
-      return res.status(400).json({ success: false, error: 'Bitte prüfen Sie Ihre Eingaben.', fields });
+      return res.status(400).json({ success: false, error: 'Please check your entries.', fields });
     }
     console.error('Contact save error:', err);
-    res.status(500).json({ success: false, error: 'Serverfehler. Bitte versuchen Sie es später erneut.' });
+    res.status(500).json({ success: false, error: 'Server error. Please try again later.' });
   }
 });
 

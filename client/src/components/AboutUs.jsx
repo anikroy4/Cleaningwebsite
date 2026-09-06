@@ -1,16 +1,16 @@
 import { ShieldCheck, Star, Clock, Users } from 'lucide-react'
 
 const VALUES = [
-  { Icon: ShieldCheck, title: 'Zuverlässigkeit',    body: 'Pünktlich, konsequent — wir halten, was wir versprechen.' },
-  { Icon: Star,        title: 'Qualität',           body: 'Modernste Technik und regelmäßige Qualitätskontrollen.' },
-  { Icon: Clock,       title: 'Flexibilität',       body: 'Anpassung an Ihren Zeitplan, auch kurzfristig.' },
-  { Icon: Users,       title: 'Erfahrenes Team',    body: 'Über 10 Jahre Expertise und echtes Engagement.' },
+  { Icon: ShieldCheck, title: 'Reliability', body: 'On time and consistent - we keep our promises.' },
+  { Icon: Star, title: 'Quality', body: 'Modern equipment and regular quality checks.' },
+  { Icon: Clock, title: 'Flexibility', body: 'Adapted to your schedule, even at short notice.' },
+  { Icon: Users, title: 'Experienced team', body: 'Over 10 years of expertise and genuine commitment.' },
 ]
 
 const STATS = [
-  { value: '10+',  label: 'Jahre Erfahrung'      },
-  { value: '500+', label: 'Zufriedene Kunden'    },
-  { value: '100%', label: 'Festpreisgarantie'    },
+  { value: '10+', label: 'Years of experience' },
+  { value: '500+', label: 'Happy customers' },
+  { value: '100%', label: 'Fixed-price guarantee' },
 ]
 
 export default function AboutUs() {
@@ -21,19 +21,18 @@ export default function AboutUs() {
 
           {/* ── Left column: copy ── */}
           <div>
-            <p className="eyebrow text-brand mb-4">Über uns</p>
+            <p className="eyebrow text-brand mb-4">About us</p>
             <h2 className="headline text-slate-900 mb-6">
-              Wir sind zuverlässig,<br />professionell und leidenschaftlich.
+              Reliable,<br />professional, and passionate.
             </h2>
 
             <p className="text-[1rem] leading-relaxed text-slate-500 mb-4">
-              Wir sind zuverlässig und professionell. CleanPro GmbH steht seit über einem Jahrzehnt
-              für exzellente Gebäudereinigung und Facility-Management in der Region. Unser
-              eingespieltes Team sorgt dafür, dass Ihre Räumlichkeiten stets in bestem Zustand sind.
+              CleanPro GmbH has stood for excellent building cleaning and facility management in the
+              region for over a decade. Our experienced team keeps your spaces in top condition.
             </p>
             <p className="text-[1rem] leading-relaxed text-slate-500 mb-10">
-              Wir setzen auf umweltfreundliche Reinigungsmittel, modernste Geräte und echte
-              Verlässlichkeit — diskret, effizient und mit persönlichem Ansprechpartner.
+              We rely on eco-friendly cleaning products, modern equipment, and real reliability -
+              discreet, efficient, and with a dedicated contact person.
             </p>
 
             {/* Stats row */}

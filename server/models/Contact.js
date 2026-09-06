@@ -4,17 +4,17 @@ const contactSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'Bitte geben Sie Ihren Namen ein.'],
+      required: [true, 'Please enter your name.'],
       trim: true,
-      minlength: [2, 'Der Name muss mindestens 2 Zeichen enthalten.'],
+      minlength: [2, 'Your name must contain at least 2 characters.'],
       maxlength: 100,
     },
     email: {
       type: String,
-      required: [true, 'Bitte geben Sie Ihre E-Mail-Adresse ein.'],
+      required: [true, 'Please enter your email address.'],
       trim: true,
       lowercase: true,
-      match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Bitte geben Sie eine gültige E-Mail-Adresse ein.'],
+      match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Please enter a valid email address.'],
     },
     phone: {
       type: String,
@@ -23,14 +23,14 @@ const contactSchema = new mongoose.Schema(
     },
     service: {
       type: String,
-      enum: ['Reinigung', 'Hausmeisterdienst', 'Winterdienst', 'Sonstiges'],
-      default: 'Sonstiges',
+      enum: ['Cleaning', 'Facility services', 'Winter maintenance', 'Other'],
+      default: 'Other',
     },
     message: {
       type: String,
-      required: [true, 'Bitte beschreiben Sie kurz Ihr Anliegen.'],
+      required: [true, 'Please briefly describe your request.'],
       trim: true,
-      minlength: [10, 'Ihre Nachricht muss mindestens 10 Zeichen enthalten.'],
+      minlength: [10, 'Your message must contain at least 10 characters.'],
       maxlength: 2000,
     },
   },

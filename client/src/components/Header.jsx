@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 import { Sparkles, Menu, X } from 'lucide-react'
 
 const NAV = [
-  { label: 'Leistungen', href: '#services' },
-  { label: 'Über uns',   href: '#about'    },
-  { label: 'Referenzen', href: '#reviews'   },
-  { label: 'Kontakt',    href: '#contact'  },
+  { label: 'Services', href: '#services' },
+  { label: 'About us', href: '#about' },
+  { label: 'Reviews', href: '#reviews' },
+  { label: 'Contact', href: '#contact' },
 ]
 
 export default function Header() {
@@ -45,13 +45,13 @@ export default function Header() {
               CleanPro GmbH
             </span>
             <span className="block text-[10px] font-medium text-slate-400 mt-0.5">
-              Reinigung & Facility Services
+              Cleaning & Facility Services
             </span>
           </div>
         </a>
 
         {/* ── Desktop nav ── */}
-        <nav className="hidden md:flex items-center gap-1" aria-label="Hauptnavigation">
+        <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
           {NAV.map(({ label, href }) => (
             <a
               key={href}
@@ -62,7 +62,7 @@ export default function Header() {
             </a>
           ))}
           <a href="#contact" className="btn btn-primary ml-3 py-2 px-4 text-[14px]">
-            Angebot anfragen
+            Request a quote
           </a>
         </nav>
 
@@ -70,7 +70,7 @@ export default function Header() {
         <button
           className="md:hidden grid h-9 w-9 place-items-center rounded-lg text-slate-600 hover:bg-green-bg hover:shadow-sm transition-all"
           onClick={() => setOpen(v => !v)}
-          aria-label={open ? 'Menü schließen' : 'Menü öffnen'}
+          aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -85,7 +85,7 @@ export default function Header() {
           ${open ? 'max-h-72 opacity-100' : 'max-h-0 opacity-0'}
         `}
       >
-        <nav className="site-wrap py-4 flex flex-col gap-1" aria-label="Mobile Navigation">
+        <nav className="site-wrap py-4 flex flex-col gap-1" aria-label="Mobile navigation">
           {NAV.map(({ label, href }) => (
             <a
               key={href}
@@ -101,7 +101,7 @@ export default function Header() {
             onClick={close}
             className="btn btn-primary mt-2 w-full"
           >
-            Angebot anfragen
+            Request a quote
           </a>
         </nav>
       </div>

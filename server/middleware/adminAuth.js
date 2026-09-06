@@ -51,4 +51,11 @@ function requireAdmin(req, res, next) {
   return next();
 }
 
+function requireSuperAdmin(req, res, next) {
+  if (req.admin?.role !== 'superadmin') {
+    return res.status(403).json({ success: false, error: 'Only super admins may manage users.' });
+  }
+  return next();
+}
+
 module.exports = { createAdminToken, requireAdmin };

@@ -12,82 +12,82 @@ import {
 const REVIEWS = [
   {
     quote:
-      "Seit CleanPro unsere Büros betreut, fühlt sich jeder Montag leichter an.",
+      "Since CleanPro started looking after our offices, every Monday feels easier.",
     name: "Julia M.",
-    role: "Büroleitung, Würzburg",
+    role: "Office manager, Wurzburg",
   },
   {
     quote:
-      "Schnelle Antworten, saubere Arbeit und ein Team, das wirklich mitdenkt.",
+      "Fast responses, spotless work, and a team that truly thinks ahead.",
     name: "Martin K.",
-    role: "Hausverwaltung, Berlin",
+    role: "Property management, Berlin",
   },
   {
     quote:
-      "Auch beim ersten Schnee war alles pünktlich geräumt. Genau so muss Service sein.",
+      "Everything was cleared on time even with the first snow. That is what service should be.",
     name: "Svenja R.",
-    role: "Eigentümerin, Potsdam",
+    role: "Property owner, Potsdam",
   },
 ];
 
 const STANDARDS = [
   {
     Icon: BadgeCheck,
-    label: "Qualitätsstandard",
-    detail: "Dokumentierte Abläufe",
+    label: "Quality standard",
+    detail: "Documented processes",
   },
   {
     Icon: ShieldCheck,
-    label: "Sicherheitsfokus",
-    detail: "Geschulte Fachkräfte",
+    label: "Safety focus",
+    detail: "Trained professionals",
   },
-  { Icon: Leaf, label: "Bewusst handeln", detail: "Umweltfreundliche Mittel" },
-  { Icon: ThumbsUp, label: "Klarer Service", detail: "Fester Ansprechpartner" },
+  { Icon: Leaf, label: "Act responsibly", detail: "Eco-friendly products" },
+  { Icon: ThumbsUp, label: "Clear service", detail: "Dedicated contact" },
 ];
 
 const GALLERY = [
   {
     src: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=900&q=85&auto=format&fit=crop",
-    alt: "Professionelle Reinigung eines hellen Raumes",
-    label: "Saubere Räume",
+    alt: "Professional cleaning of a bright room",
+    label: "Clean spaces",
   },
   {
     src: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=900&q=85&auto=format&fit=crop",
-    alt: "Reinigungskraft bei der Arbeit",
-    label: "Sorgfalt im Detail",
+    alt: "Cleaner at work",
+    label: "Attention to detail",
   },
   {
     src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&q=85&auto=format&fit=crop",
-    alt: "Gepflegte Außenanlage eines Gebäudes",
-    label: "Alles im Blick",
+    alt: "Well-maintained outdoor area of a building",
+    label: "Everything in hand",
   },
   {
     src: "https://images.unsplash.com/photo-1483347756197-71ef80e95f73?w=900&q=85&auto=format&fit=crop",
-    alt: "Verschneite Wege im Winter",
-    label: "Bereit bei jedem Wetter",
+    alt: "Snow-covered paths in winter",
+    label: "Ready in any weather",
   },
 ];
 
 const GUARANTEES = [
   {
     Icon: Clock3,
-    title: "Antwort in 24 Stunden",
-    body: "Sie erhalten schnell eine klare Rückmeldung und ein unverbindliches Angebot.",
+    title: "Reply within 24 hours",
+    body: "You will quickly receive a clear response and a no-obligation quote.",
   },
   {
     Icon: Sparkles,
-    title: "Sauber dokumentiert",
-    body: "Leistungen und Intervalle bleiben transparent und nachvollziehbar.",
+    title: "Clearly documented",
+    body: "Services and schedules remain transparent and easy to follow.",
   },
   {
     Icon: ShieldCheck,
-    title: "Planbare Kosten",
-    body: "Faire Festpreise ohne Überraschungen bei der Monatsabrechnung.",
+    title: "Predictable costs",
+    body: "Fair fixed prices with no surprises on your monthly invoice.",
   },
   {
     Icon: Droplets,
-    title: "Nachhaltig gedacht",
-    body: "Wir wählen effiziente Abläufe und umweltbewusste Reinigungsmittel.",
+    title: "Sustainably considered",
+    body: "We choose efficient processes and environmentally conscious products.",
   },
 ];
 
@@ -108,7 +108,7 @@ function Reviews() {
       <div className="site-wrap">
         <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div>
-            <p className="eyebrow mb-3 text-cobalt">Kundenstimmen</p>
+            <p className="eyebrow mb-3 text-cobalt">Customer reviews</p>
             <h2 className="headline text-slate-900">
               Gute Arbeit spricht
               <br className="hidden sm:block" /> sich herum.
@@ -164,16 +164,15 @@ function Accreditations() {
         <div className="mb-7 flex flex-col justify-between gap-3 md:flex-row md:items-end">
           <div>
             <p className="eyebrow mb-2 text-brand">
-              Akkreditierungen & Standards
+              Accreditations & standards
             </p>
             <h2 className="text-2xl font-bold tracking-tight text-brand-dark">
-              Vertrauen braucht Nachweise.
+              Trust needs proof.
             </h2>
           </div>
           <p className="max-w-md text-sm leading-6 text-[#55705A]">
-            Unsere Abläufe sind auf Qualität, Sicherheit und verlässliche
-            Zusammenarbeit ausgerichtet. Nachweise erhalten Sie gerne auf
-            Anfrage.
+            Our processes are designed around quality, safety, and reliable
+            collaboration. Supporting documents are available on request.
           </p>
         </div>
         <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-[#C8D98F] bg-[#C8D98F] md:grid-cols-4">
@@ -198,14 +197,13 @@ function Gallery() {
     <section id="gallery" className="section-py bg-white">
       <div className="site-wrap">
         <div className="mb-10 max-w-xl">
-          <p className="eyebrow mb-3 text-cobalt">Einblicke</p>
+          <p className="eyebrow mb-3 text-cobalt">A closer look</p>
           <h2 className="headline text-slate-900">
-            Ordnung, die man
-            <br /> sehen kann.
+            Order you can
+            <br /> see.
           </h2>
           <p className="mt-4 text-base leading-relaxed text-slate-500">
-            Ein kleiner Eindruck von den Räumen, Wegen und Details, um die wir
-            uns kümmern.
+            A glimpse at the spaces, paths, and details we take care of.
           </p>
         </div>
         <div className="grid auto-rows-45 grid-cols-2 gap-3 sm:auto-rows-55 lg:grid-cols-4 lg:auto-rows-65">
@@ -240,12 +238,11 @@ function Guarantees() {
       <div className="site-wrap">
         <div className="mb-10 flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
           <div>
-            <p className="eyebrow mb-3 text-brand-light">Unser Versprechen</p>
-            <h2 className="headline text-white">Service, der bleibt.</h2>
+            <p className="eyebrow mb-3 text-brand-light">Our promise</p>
+            <h2 className="headline text-white">Service that lasts.</h2>
           </div>
           <p className="max-w-md text-sm leading-6 text-slate-400">
-            Verlässliche Leistung heißt für uns: erreichbar sein, sauber
-            arbeiten und Verantwortung übernehmen.
+            Reliable service means being available, working cleanly, and taking responsibility.
           </p>
         </div>
         <div className="grid gap-px overflow-hidden rounded-2xl border border-slate-700 bg-slate-700 sm:grid-cols-2 lg:grid-cols-4">

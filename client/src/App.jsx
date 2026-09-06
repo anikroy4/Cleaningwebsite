@@ -14,7 +14,7 @@ export default function App() {
       <>
         <Helmet>
           <title>Admin Dashboard | CleanPro GmbH</title>
-          <meta name="description" content="Interne Übersicht der eingegangenen CleanPro-Anfragen." />
+          <meta name="description" content="Internal overview of incoming CleanPro requests." />
           <meta name="robots" content="noindex, nofollow" />
         </Helmet>
         <AdminPortal />
@@ -25,10 +25,10 @@ export default function App() {
   return (
     <>
       <Helmet>
-        <title>CleanPro GmbH | Reinigung, Hausmeisterdienst & Winterdienst</title>
-        <meta name="description" content="Professionelle Reinigung, Hausmeisterdienst und Winterdienst von CleanPro GmbH. Zuverlässig, flexibel und mit persönlichem Ansprechpartner." />
-        <meta property="og:title" content="CleanPro GmbH | Sauberkeit, auf die Sie vertrauen können" />
-        <meta property="og:description" content="Professionelle Reinigung, Hausmeisterdienst und Winterdienst aus einer Hand." />
+        <title>CleanPro GmbH | Cleaning, Facility Services & Winter Maintenance</title>
+        <meta name="description" content="Professional cleaning, facility services, and winter maintenance from CleanPro GmbH. Reliable, flexible, and personal." />
+        <meta property="og:title" content="CleanPro GmbH | Cleanliness you can trust" />
+        <meta property="og:description" content="Professional cleaning, facility services, and winter maintenance from one source." />
         <meta property="og:type" content="website" />
       </Helmet>
       <div className="site-shell">

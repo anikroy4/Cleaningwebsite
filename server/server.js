@@ -39,10 +39,10 @@ app.get('/api/health', (_req, res) => {
 
 app.use((err, _req, res, _next) => {
   if (err instanceof SyntaxError && err.status === 400 && err.type === 'entity.parse.failed') {
-    return res.status(400).json({ success: false, error: 'Ungültige JSON-Anfrage.' });
+    return res.status(400).json({ success: false, error: 'Invalid JSON request.' });
   }
   console.error('Unhandled server error:', err);
-  return res.status(500).json({ success: false, error: 'Serverfehler. Bitte versuchen Sie es später erneut.' });
+  return res.status(500).json({ success: false, error: 'Server error. Please try again later.' });
 });
 
 const startServer = () => {

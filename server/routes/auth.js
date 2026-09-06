@@ -10,21 +10,13 @@ function safeEqual(left, right) {
   return leftBuffer.length === rightBuffer.length && crypto.timingSafeEqual(leftBuffer, rightBuffer);
 }
 
-// POST /api/auth/login
 router.post('/login', (req, res) => {
   const username = typeof req.body.username === 'string' ? req.body.username.trim() : '';
   const password = typeof req.body.password === 'string' ? req.body.password : '';
   const configuredUsername = process.env.ADMIN_USERNAME || 'admin';
   const configuredPassword = process.env.ADMIN_PASSWORD;
-
-  if (!configuredPassword) {
-    return res.status(503).json({ success: false, error: 'Admin-Anmeldung ist nicht konfiguriert.' });
-  }
-
-  if (!safeEqual(username, configuredUsername) || !safeEqual(password, configuredPassword)) {
-    return res.status(401).json({ success: false, error: 'Benutzername oder Passwort ist falsch.' });
-  }
-
+  if (!configuredPassword) return res.status(503).json({ success: false, error: 'Admin-Anmeldung ist nicht konfiguriert.' });
+  if (!safeEqual(username, configuredUsername) || !safeEqual(password, configuredPassword)) return res.status(401).json({ success: false, error: 'Benutzername oder Passwort ist falsch.' });
   return res.json({ success: true, token: createAdminToken(username) });
 });
 

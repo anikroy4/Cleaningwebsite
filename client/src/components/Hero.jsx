@@ -2,17 +2,17 @@ import { useEffect, useState } from 'react'
 import { ArrowRight, CheckCircle2 } from 'lucide-react'
 
 const PILLS = [
-  'Kostenlose Erstberatung',
-  'Festpreisgarantie',
-  'Schnelle Reaktionszeit',
+  'Free initial consultation',
+  'Fixed-price guarantee',
+  'Fast response time',
 ]
 
 export default function Hero() {
   const [note, setNote] = useState(0)
   const notes = [
-    'Ein sauberes Umfeld macht den Kopf frei.',
-    'Ihr Alltag ist voll genug. Den Rest übernehmen wir.',
-    'Gute Arbeit beginnt mit einem guten Gefühl.',
+    'A clean environment clears your mind.',
+    'Your day is full enough. We will handle the rest.',
+    'Good work starts with a good feeling.',
   ]
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function Hero() {
     <section
       id="hero"
       className="relative overflow-hidden bg-[#F6F1E8]"
-      aria-label="Einleitung"
+      aria-label="Introduction"
     >
       {/* Subtle grid pattern */}
       <div
@@ -54,14 +54,14 @@ export default function Hero() {
           {/* Eyebrow */}
           <div className="inline-flex items-center gap-2 rounded-full border border-[#C8D8C5] bg-[#E7F0E9] px-4 py-1.5 mb-8">
             <span className="h-1.5 w-1.5 rounded-full bg-[#C9785C] animate-pulse" />
-            <span className="eyebrow text-[#28645A]">Professioneller Reinigungsservice</span>
+            <span className="eyebrow text-[#28645A]">Professional cleaning service</span>
           </div>
 
           {/* Headline */}
           <h1 className="display text-slate-900 mb-6">
-            Sauberkeit, auf die Sie{' '}
+            Cleanliness you can{' '}
             <span className="relative inline-block">
-              <span className="relative z-10 text-[#28645A]">vertrauen können.</span>
+              <span className="relative z-10 text-[#28645A]">trust.</span>
               <svg
                 aria-hidden="true"
                 className="absolute -bottom-1 left-0 w-full"
@@ -81,8 +81,8 @@ export default function Hero() {
 
           {/* Sub */}
           <p className="mx-auto max-w-xl text-[1.0625rem] leading-relaxed text-slate-500 mb-4">
-            CleanPro GmbH steht für professionelle Gebäudereinigung, Hausmeisterdienste und
-            Winterdienst — zuverlässig, flexibel und mit einem offenen Ohr für das, was Sie brauchen.
+            CleanPro GmbH provides professional building cleaning, facility services, and
+            winter maintenance - reliable, flexible, and attentive to what you need.
           </p>
           <p className="mx-auto mb-10 min-h-6 max-w-xl text-sm font-medium text-[#C9785C] transition-opacity duration-500" aria-live="polite">
             {notes[note]}
@@ -91,10 +91,10 @@ export default function Hero() {
           {/* CTA row */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12">
             <a href="#contact" className="btn btn-primary w-full sm:w-auto">
-              Angebot anfragen <ArrowRight className="h-4 w-4" />
+              Request a quote <ArrowRight className="h-4 w-4" />
             </a>
             <a href="#services" className="btn btn-ghost w-full sm:w-auto">
-              Unsere Leistungen
+              Our services
             </a>
           </div>
 

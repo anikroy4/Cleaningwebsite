@@ -7,13 +7,13 @@ const SERVICES = [
     color: 'text-brand',
     bg: 'bg-brand-light',
     tag: 'Cleaning Services',
-    title: 'Reinigung',
-    body: 'Wir kümmern uns um die Arbeit, die im Alltag gern liegen bleibt. Regelmäßig oder einmalig, ganz nach dem Rhythmus Ihres Hauses.',
+    title: 'Cleaning',
+    body: 'We take care of the work that often gets left behind. Regularly or as a one-off, according to the rhythm of your property.',
     features: [
-      'Büro- & Gewerbereinigung',
-      'Grundreinigung & Sonderreinigung',
-      'Treppenhaus & Gemeinschaftsflächen',
-      'Glasreinigung & Fassade',
+      'Office & commercial cleaning',
+      'Deep & specialist cleaning',
+      'Stairwells & common areas',
+      'Window & facade cleaning',
     ],
     img: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=720&q=85&auto=format&fit=crop',
   },
@@ -22,13 +22,13 @@ const SERVICES = [
     color: 'text-slate-700',
     bg: 'bg-slate-100',
     tag: 'Facility Services',
-    title: 'Hausmeisterdienst',
-    body: 'Ein vertrautes Gesicht, das nach dem Rechten sieht: kleine Reparaturen, Außenpflege und technische Kontrollen aus einer Hand.',
+    title: 'Facility services',
+    body: 'A familiar face keeping an eye on things: minor repairs, grounds care, and technical checks from one source.',
     features: [
-      'Kleinreparaturen & Handwerk',
-      'Pflege von Außenanlagen',
-      'Technische Kontrollen & Wartung',
-      'Schlüsseldienst & Zugangsverwaltung',
+      'Minor repairs & general maintenance',
+      'Grounds and outdoor area care',
+      'Technical checks & maintenance',
+      'Keyholding & access management',
     ],
     img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=720&q=85&auto=format&fit=crop',
   },
@@ -37,13 +37,13 @@ const SERVICES = [
     color: 'text-[#3157F5]',
     bg: 'bg-[#E8ECFF]',
     tag: 'Winter Services',
-    title: 'Winterdienst',
-    body: 'Wenn es glatt wird, sind wir da. Wir räumen und streuen Gehwege, Zufahrten und Parkplätze, auch früh morgens und an Feiertagen.',
+    title: 'Winter maintenance',
+    body: 'When surfaces get icy, we are there. We clear and grit sidewalks, driveways, and parking lots, including early mornings and holidays.',
     features: [
-      'Schneeräumung & Streuung',
-      '24 / 7 Winterbereitschaft',
-      'Gehwege, Parkplätze & Zufahrten',
-      'Saisonale Pauschalverträge',
+      'Snow clearing & gritting',
+      '24 / 7 winter readiness',
+      'Sidewalks, parking lots & driveways',
+      'Seasonal flat-rate contracts',
     ],
     img: 'https://images.unsplash.com/photo-1483347756197-71ef80e95f73?w=720&q=85&auto=format&fit=crop',
   },
@@ -58,13 +58,13 @@ export default function Services() {
 
         {/* Header */}
         <div className="mb-14 max-w-xl">
-          <p className="eyebrow text-cobalt mb-3">Unsere Leistungen</p>
+          <p className="eyebrow text-cobalt mb-3">Our services</p>
           <h2 className="headline text-slate-900 mb-4">
             Alles aus einer Hand.
           </h2>
           <p className="text-[1rem] leading-relaxed text-slate-500">
-            Sie sagen uns, was gerade wichtig ist. Wir hören zu, denken mit und kümmern uns darum,
-            dass Ihre Immobilie sich einfach gut anfühlt.
+            Tell us what matters right now. We listen, think ahead, and make sure your property
+            simply feels right.
           </p>
         </div>
 
@@ -101,7 +101,7 @@ export default function Services() {
                     <Icon className={`h-5 w-5 ${color}`} />
                   </div>
                   <h3 className="text-[1.0625rem] font-bold text-slate-900">{title}</h3>
-                  {activeService === index && <span className="ml-auto text-[11px] font-semibold text-clay">Ausgewählt</span>}
+                  {activeService === index && <span className="ml-auto text-[11px] font-semibold text-clay">Selected</span>}
                 </div>
 
                 <p className="text-[0.9375rem] leading-relaxed text-slate-500 mb-5">{body}</p>
@@ -122,7 +122,7 @@ export default function Services() {
                   onClick={() => window.dispatchEvent(new CustomEvent('cleanpro-service', { detail: title }))}
                   className="group/cta inline-flex items-center gap-1 rounded-md text-[13px] font-semibold text-brand transition-colors hover:text-clay focus-visible:outline-2 focus-visible:outline-clay focus-visible:outline-offset-4"
                 >
-                  Angebot anfragen <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover/cta:translate-x-1" />
+                  Request a quote <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover/cta:translate-x-1" />
                 </a>
               </div>
             </article>

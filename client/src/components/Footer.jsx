@@ -27,13 +27,13 @@ const SOCIAL = [
 ]
 
 const NAV_LINKS = [
-  { label: 'Leistungen', href: '#services' },
-  { label: 'Über uns',   href: '#about'    },
-  { label: 'Kundenstimmen', href: '#reviews' },
-  { label: 'Galerie',    href: '#gallery'   },
-  { label: 'Kontakt',    href: '#contact'  },
-  { label: 'Impressum',  href: '#'         },
-  { label: 'Datenschutz',href: '#'         },
+  { label: 'Services', href: '#services' },
+  { label: 'About us', href: '#about' },
+  { label: 'Customer reviews', href: '#reviews' },
+  { label: 'Gallery', href: '#gallery' },
+  { label: 'Contact', href: '#contact' },
+  { label: 'Legal notice', href: '#' },
+  { label: 'Privacy policy', href: '#' },
 ]
 
 export default function Footer() {
@@ -47,15 +47,15 @@ export default function Footer() {
         <div className="site-wrap py-8 flex flex-col sm:flex-row items-center justify-between gap-5">
           <div>
             <p className="text-white font-semibold text-[1.0625rem] mb-1">
-              Bereit für mehr Sauberkeit?
+              Ready for a cleaner space?
             </p>
             <p className="text-slate-400 text-[0.875rem]">
-              Schreiben Sie uns — wir antworten innerhalb von 24 Stunden.
+              Write to us - we will reply within 24 hours.
             </p>
           </div>
           <div className="flex items-center gap-3 shrink-0">
             <a
-              href="https://wa.me/4901234567890?text=Hallo%2C%20ich%20m%C3%B6chte%20ein%20Angebot%20anfragen."
+              href="https://wa.me/4901234567890?text=Hello%2C%20I%20would%20like%20to%20request%20a%20quote."
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-whatsapp text-[14px] py-2.5 px-4"
@@ -86,7 +86,7 @@ export default function Footer() {
             <span className="font-bold text-white text-[15px]">CleanPro GmbH</span>
           </a>
           <p className="text-[0.875rem] leading-relaxed text-slate-500 mb-6 max-w-xs">
-            Ihr zuverlässiger Partner für Reinigung, Hausmeisterdienst und Winterdienst — professionell und zu Festpreisen.
+            Your reliable partner for cleaning, facility services, and winter maintenance - professional and at fixed prices.
           </p>
           {/* Social */}
           <div className="flex items-center gap-2">
@@ -121,7 +121,7 @@ export default function Footer() {
 
         {/* Contact */}
         <div>
-          <h3 className="eyebrow text-slate-500 mb-5">Kontakt</h3>
+          <h3 className="eyebrow text-slate-500 mb-5">Contact</h3>
           <ul className="space-y-3 text-[0.875rem]">
             <li className="leading-relaxed text-slate-500">
               Musterstraße 12<br />10115 Berlin
@@ -136,7 +136,7 @@ export default function Footer() {
                 info@cleanpro-gmbh.de
               </a>
             </li>
-            <li className="text-slate-500">Mo – Fr: 07:00 – 18:00 Uhr</li>
+            <li className="text-slate-500">Mon - Fri: 07:00 - 18:00</li>
           </ul>
         </div>
       </div>
@@ -144,12 +144,12 @@ export default function Footer() {
       {/* ── Bottom bar ── */}
       <div className="border-t border-slate-800">
         <div className="site-wrap py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-[12px] text-slate-600">
-          <p>© {year} CleanPro GmbH. Alle Rechte vorbehalten.</p>
+          <p>© {year} CleanPro GmbH. All rights reserved.</p>
           <a
             href="#"
             className="inline-flex items-center gap-1 text-slate-600 hover:text-slate-400 transition-colors"
           >
-            Nach oben <ArrowUpRight className="h-3 w-3" />
+            Back to top <ArrowUpRight className="h-3 w-3" />
           </a>
         </div>
       </div>

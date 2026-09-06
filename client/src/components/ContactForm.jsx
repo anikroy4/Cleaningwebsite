@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Send, CheckCircle2, AlertCircle, Loader2, Phone, Mail, MessageCircle } from 'lucide-react'
 
-const SERVICE_OPTIONS = ['Reinigung', 'Hausmeisterdienst', 'Winterdienst', 'Sonstiges']
+const SERVICE_OPTIONS = ['Cleaning', 'Facility services', 'Winter maintenance', 'Other']
 const API_URL = import.meta.env.VITE_API_URL || '/api'
 
 const CONTACT_CARDS = [
@@ -29,8 +29,8 @@ const CONTACT_CARDS = [
     bg: 'bg-green-50',
     border: 'border-green-100',
     label: 'WhatsApp',
-    value: 'Direkt schreiben →',
-    href: 'https://wa.me/4901234567890?text=Hallo%2C%20ich%20m%C3%B6chte%20ein%20Angebot%20anfragen.',
+    value: 'Message us directly ->',
+    href: 'https://wa.me/4901234567890?text=Hello%2C%20I%20would%20like%20to%20request%20a%20quote.',
     color: 'text-green-600',
     external: true,
   },
@@ -58,13 +58,13 @@ export default function ContactForm() {
 
   const validate = () => {
     const errors = {}
-    if (!form.name.trim()) errors.name = 'Bitte geben Sie Ihren Namen ein.'
-    else if (form.name.trim().length < 2) errors.name = 'Der Name muss mindestens 2 Zeichen enthalten.'
-    if (!form.email.trim()) errors.email = 'Bitte geben Sie Ihre E-Mail-Adresse ein.'
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) errors.email = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.'
-    if (form.phone.trim() && !/^[+\d][\d\s()\-/.]{5,29}$/.test(form.phone.trim())) errors.phone = 'Bitte geben Sie eine gültige Telefonnummer ein.'
-    if (!form.message.trim()) errors.message = 'Bitte beschreiben Sie kurz Ihr Anliegen.'
-    else if (form.message.trim().length < 10) errors.message = 'Ihre Nachricht muss mindestens 10 Zeichen enthalten.'
+    if (!form.name.trim()) errors.name = 'Please enter your name.'
+    else if (form.name.trim().length < 2) errors.name = 'Your name must contain at least 2 characters.'
+    if (!form.email.trim()) errors.email = 'Please enter your email address.'
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) errors.email = 'Please enter a valid email address.'
+    if (form.phone.trim() && !/^[+\d][\d\s()\-/.]{5,29}$/.test(form.phone.trim())) errors.phone = 'Please enter a valid phone number.'
+    if (!form.message.trim()) errors.message = 'Please briefly describe your request.'
+    else if (form.message.trim().length < 10) errors.message = 'Your message must contain at least 10 characters.'
     setFieldErrors(errors)
     return Object.keys(errors).length === 0
   }
@@ -73,7 +73,7 @@ export default function ContactForm() {
     e.preventDefault()
     if (!validate()) {
       setStatus('error')
-      setErrMsg('Bitte prüfen Sie die markierten Felder.')
+      setErrMsg('Please check the highlighted fields.')
       return
     }
     setStatus('loading')
@@ -85,7 +85,7 @@ export default function ContactForm() {
       setFieldErrors({})
     } catch (err) {
       setStatus('error')
-      setErrMsg(err.response?.data?.error || 'Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.')
+      setErrMsg(err.response?.data?.error || 'Something went wrong. Please try again.')
       setFieldErrors(err.response?.data?.fields || {})
     }
   }
@@ -97,14 +97,14 @@ export default function ContactForm() {
 
           {/* ── Left: Info ── */}
           <div>
-            <p className="eyebrow text-cobalt mb-4">Kontakt</p>
+            <p className="eyebrow text-cobalt mb-4">Contact</p>
             <h2 className="headline text-slate-900 mb-5">
-              Kostenloses Angebot<br />anfragen.
+              Request a free<br />quote.
             </h2>
             <p className="text-[1rem] leading-relaxed text-slate-500 mb-8">
-              Erzählen Sie uns kurz, wobei wir helfen dürfen. Wir melden uns innerhalb von{' '}
-              <strong className="text-slate-700 font-semibold">24 Stunden</strong> mit einem
-              unverbindlichen Angebot zurück.
+              Tell us briefly how we can help. We will get back to you within{' '}
+              <strong className="text-slate-700 font-semibold">24 hours</strong> with a
+              no-obligation quote.
             </p>
 
             {/* Contact info cards */}
@@ -137,34 +137,34 @@ export default function ContactForm() {
                 <div className="mb-5 grid h-16 w-16 place-items-center rounded-full bg-green-50 border border-green-100">
                   <CheckCircle2 className="h-8 w-8 text-green-500" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">Anfrage erhalten!</h3>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">Request received!</h3>
                 <p className="text-slate-500 text-[0.9375rem] mb-6">
-                  Wir melden uns innerhalb von 24 Stunden bei Ihnen.
+                  We will get back to you within 24 hours.
                 </p>
                 <button
                   onClick={() => setStatus(null)}
                   className="btn btn-ghost text-[14px] py-2"
                 >
-                  Neue Anfrage stellen
+                  Submit another request
                 </button>
               </div>
             ) : (
               /* Form */
               <form onSubmit={submit} noValidate className="space-y-4">
-                <h3 className="text-[1rem] font-bold text-slate-900 mb-1">Anfrageformular</h3>
-                <p className="text-[13px] text-slate-400 mb-5">Pflichtfelder sind mit * markiert.</p>
+                <h3 className="text-[1rem] font-bold text-slate-900 mb-1">Request form</h3>
+                <p className="text-[13px] text-slate-400 mb-5">Required fields are marked with *.</p>
 
                 {/* Row: Name + Email */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <label className="block space-y-1.5">
-                    <span className="text-[12px] font-semibold text-slate-600">Name *</span>
+                      <span className="text-[12px] font-semibold text-slate-600">Name *</span>
                     <input
                       className={`field ${fieldErrors.name ? 'field-error' : ''}`}
                       type="text"
                       name="name"
                       value={form.name}
                       onChange={handle}
-                      placeholder="Vollständiger Name"
+                      placeholder="Full name"
                       required
                       autoComplete="name"
                       aria-invalid={Boolean(fieldErrors.name)}
@@ -180,7 +180,7 @@ export default function ContactForm() {
                       name="email"
                       value={form.email}
                       onChange={handle}
-                      placeholder="ihre@email.de"
+                      placeholder="your@email.com"
                       required
                       autoComplete="email"
                       aria-invalid={Boolean(fieldErrors.email)}
@@ -193,7 +193,7 @@ export default function ContactForm() {
                 {/* Row: Phone + Service */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <label className="block space-y-1.5">
-                    <span className="text-[12px] font-semibold text-slate-600">Telefon</span>
+                    <span className="text-[12px] font-semibold text-slate-600">Phone</span>
                     <input
                       className={`field ${fieldErrors.phone ? 'field-error' : ''}`}
                       type="tel"
@@ -208,14 +208,14 @@ export default function ContactForm() {
                     {fieldErrors.phone && <span id="phone-error" className="field-message">{fieldErrors.phone}</span>}
                   </label>
                   <label className="block space-y-1.5">
-                    <span className="text-[12px] font-semibold text-slate-600">Leistung</span>
+                    <span className="text-[12px] font-semibold text-slate-600">Service</span>
                     <select
                       className="field cursor-pointer"
                       name="service"
                       value={form.service}
                       onChange={handle}
                     >
-                      <option value="">Bitte auswählen</option>
+                      <option value="">Please select</option>
                       {SERVICE_OPTIONS.map((s) => (
                         <option key={s} value={s}>{s}</option>
                       ))}
@@ -225,13 +225,13 @@ export default function ContactForm() {
 
                 {/* Textarea */}
                 <label className="block space-y-1.5">
-                  <span className="text-[12px] font-semibold text-slate-600">Nachricht *</span>
+                  <span className="text-[12px] font-semibold text-slate-600">Message *</span>
                   <textarea
                     className={`field resize-none h-32 ${fieldErrors.message ? 'field-error' : ''}`}
                     name="message"
                     value={form.message}
                     onChange={handle}
-                    placeholder="Was darf für Sie leichter werden?"
+                    placeholder="How can we make things easier for you?"
                     required
                     aria-invalid={Boolean(fieldErrors.message)}
                     aria-describedby={fieldErrors.message ? 'message-error' : undefined}
@@ -254,8 +254,8 @@ export default function ContactForm() {
                   className="btn btn-primary w-full disabled:opacity-60 disabled:cursor-not-allowed mt-1"
                 >
                   {status === 'loading'
-                    ? <><Loader2 className="h-4 w-4 animate-spin" /> Wird gesendet…</>
-                    : <><Send className="h-4 w-4" /> Angebot anfragen</>
+                    ? <><Loader2 className="h-4 w-4 animate-spin" /> Sending…</>
+                    : <><Send className="h-4 w-4" /> Request a quote</>
                   }
                 </button>
               </form>
@@ -266,14 +266,14 @@ export default function ContactForm() {
         <div className="mt-14 overflow-hidden rounded-2xl border border-slate-200 bg-[#F8FAFC] shadow-[0_12px_35px_rgb(21_59_55/0.08)]">
           <div className="flex flex-col justify-between gap-3 border-b border-slate-200 px-5 py-4 sm:flex-row sm:items-center sm:px-6">
             <div>
-              <p className="eyebrow text-cobalt">Unser Standort</p>
+              <p className="eyebrow text-cobalt">Our location</p>
               <p className="mt-1 text-sm font-semibold text-slate-800">Musterstraße 12 · 10115 Berlin</p>
             </div>
             <span className="text-xs font-medium text-slate-400">CleanPro GmbH</span>
           </div>
           <div className="aspect-video w-full sm:aspect-16/6">
             <iframe
-              title="CleanPro GmbH Standortkarte"
+              title="CleanPro GmbH location map"
               src="https://www.google.com/maps?q=Musterstra%C3%9Fe%2012%2C%2010115%20Berlin&z=14&output=embed"
               className="h-full w-full border-0 grayscale-15"
               loading="lazy"
